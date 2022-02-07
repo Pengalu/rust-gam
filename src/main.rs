@@ -8,13 +8,28 @@ extern crate piston;
 use glutin_window::GlutinWindow as Window;
 use opengl_graphics::{GlGraphics, OpenGL};
 use piston::event_loop::{EventSettings, Events};
-use piston::input::{RenderArgs, RenderEvent, UpdateArgs, UpdateEvent};
+use piston::input::{RenderArgs, RenderEvent, UpdateArgs, UpdateEvent, ButtonArgs, ButtonEvent};
 use piston::window::WindowSettings;
 
 // create new public struct type "App" that contains glgraphics object and rotation
 pub struct App {
     gl: GlGraphics, // OpenGL drawing backend.
     rotation: f64,  // Rotation for the square.
+    transform: Transform,
+    inputs: Inputs,
+}
+
+// create a public struct that handles input
+pub struct Inputs {
+    wpressed: bool,
+    apressed: bool,
+    spressed: bool,
+    dpressed: bool,
+}
+
+pub struct Transform {
+    x: i64,
+    y: i64,
 }
 
 // implements functionality for struct "App"
@@ -24,10 +39,10 @@ impl App {
     fn render(&mut self, args: &RenderArgs) {
         use graphics::*;
 
-        const WHITE: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
-        const GREEN: [f32; 4] = [0.0, 1.0, 0.0, 1.0];
-        const RED: [f32; 4] = [1.0, 0.0, 0.0, 1.0];
-
+        const WHITE: [f32; 4.] = [1.0, 1.0, 1.0, 1.0];
+        const GREEN: [f32; 4.] = [0.0, 1.0, 0.0, 1.0];
+        const RED: [f32; 4.] = [1.0, 0.0, 0.0, 1.0];
+  
         let square = rectangle::square(0.0, 0.0, 50.0);
         let rotation = self.rotation;
         let (x, y) = (args.window_size[0] / 2.0, args.window_size[1] / 2.0);
@@ -48,10 +63,30 @@ impl App {
     }
 
     fn update(&mut self, args: &UpdateArgs) {
-        // Rotate 2 radians per second.
-        self.rotation += 25 * args.dt;
+        // hands update down to transform struct
+        self.transform.update(args.dt);
+    }
+
+    fn updateButtons(&mut self, args: &ButtonArgs) {
+        use piston::input::keyboard::*;
+        use piston::input::mouse::*;
+        match args.button {
+            Button::Keyboard(e) => self.inputs.updateKeys(args),
+            Button::Mouse(e) => self.inputs.updateMouse
+        }
     }
 }
+
+impl Inputs {
+    fn updateKeys(&mut self, args: &ButtonArgs) {
+
+    }
+
+    fn updateMouse(&mut self, args: &ButtonArgs) {
+
+    }
+}
+
 
 fn main() {
     // Create an Glutin window.
@@ -65,6 +100,16 @@ fn main() {
     let mut app = App {
         gl: GlGraphics::new(OpenGL::V3_2),
         rotation: 0.0,
+        transform: Transform {
+            x: 69,
+            y: 69,
+        },
+        inputs: Inputs { 
+            wpressed: false, 
+            apressed: false, 
+            spressed: false, 
+            dpressed: false,
+        }
     };
 
     // create event listener
@@ -80,6 +125,11 @@ fn main() {
         // getys arguements from update and updates
         if let Some(args) = e.update_args() {
             app.update(&args);
+        }
+
+        // gets aguements from update and updates buttons pressed
+        if let Some(args) = e.button_args() {
+            app.updateButtons(&args);
         }
     }
 }
