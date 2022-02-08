@@ -11,26 +11,13 @@ use piston::Button;
 use piston::event_loop::{EventSettings, Events};
 use piston::input::{RenderArgs, RenderEvent, UpdateArgs, UpdateEvent, ButtonArgs, ButtonEvent};
 use piston::window::WindowSettings;
+use player::player;
 
 // create new public struct type "App" that contains glgraphics object and rotation
 pub struct App {
     gl: GlGraphics, // OpenGL drawing backend.
-    rotation: f64,  // Rotation for the square.
-    transform: Transform,
+    player: player, // Player struct from player.rs
     inputs: Inputs,
-}
-
-// create a public struct that handles input
-pub struct Inputs {
-    wpressed: bool,
-    apressed: bool,
-    spressed: bool,
-    dpressed: bool,
-}
-
-pub struct Transform {
-    x: i64,
-    y: i64,
 }
 
 // implements functionality for struct "App"
@@ -46,7 +33,7 @@ impl App {
   
         let square = rectangle::square(0.0, 0.0, 50.0);
         let rotation = self.rotation;
-        let (x, y) = (args.window_size[0] / 2.0, args.window_size[1] / 2.0);
+        let (x, y) = (self.transform.x * {args.window_size[0] / 16.0}, self.transform.y * {args.window_size[1] / 16.0});
 
         self.gl.draw(args.viewport(), |c, gl| {
             // Clear the screen.
