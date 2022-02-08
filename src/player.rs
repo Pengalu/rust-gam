@@ -1,8 +1,5 @@
+use crate::entity;
 
-pub mod player;
-
-use Entity::*;
-
-struct player {
-    transform: Transform
+pub struct Player {
+    transform: entity::Transform,
 }
