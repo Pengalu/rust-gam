@@ -16,11 +16,12 @@ pub struct Game {
 // implements functionality for struct "Game"
 impl Game {
 
+    // constructor 
     pub fn new() -> Game {
         Game {
             gl: GlGraphics::new(OpenGL::V3_2),
-            player: (),
-            inputs: (),
+            player: Player::new(20u64,20u64),
+            inputs: Inputs::new(),
         }
     }
 
@@ -45,10 +46,7 @@ impl Game {
 
             let transform = c
                 .transform
-                .trans(x, y)
-                .rot_rad(rotation)
-                .trans(-25.0, -25.0);
-
+                .trans(x, y);
             // Draw a box rotating around the middle of the screen.
             rectangle(RED, square, transform, gl);
         });
@@ -66,8 +64,9 @@ impl Game {
     }
 }
 
+// helper function for making new window container
 pub fn new_window() -> Window {
-    WindowSettings::new("spinning-square", [200, 200])
+    WindowSettings::new("the game that is good", [200, 200])
         .graphics_api(OpenGL::V3_2)
         .exit_on_esc(true)
         .build()

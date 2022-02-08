@@ -1,5 +1,11 @@
 
 
-pub struct input_handler {
-    
+pub struct Inputs {
+
+}
+
+impl Inputs {
+    pub fn new() -> Inputs {
+        Inputs {}
+    }
 }

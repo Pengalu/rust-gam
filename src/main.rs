@@ -6,6 +6,7 @@ extern crate piston;
 mod player;
 mod entity;
 mod game;
+mod inputHandler;
 
 // shorthanding
 pub use game::*;
@@ -18,11 +19,7 @@ fn main() {
     let mut window = game::new_window();
 
     // Create a new game and run it.
-    let mut Game = Game {
-        gl: opengl_graphics::GlGraphics::new(opengl_graphics::OpenGL::V3_2),
-        player: ,
-        inputs: ,
-    };
+    let mut Game = Game::new();
 
     // create event listener
     let mut events = Events::new(EventSettings::new());
