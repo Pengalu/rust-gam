@@ -3,12 +3,11 @@ extern crate glutin_window;
 extern crate graphics;
 extern crate opengl_graphics;
 extern crate piston;
-
+mod player;
 
 // shorthanding the imports
 use glutin_window::GlutinWindow as Window;
 use opengl_graphics::{GlGraphics, OpenGL};
-use piston::Button;
 use piston::event_loop::{EventSettings, Events};
 use piston::input::{RenderArgs, RenderEvent, UpdateArgs, UpdateEvent, ButtonArgs, ButtonEvent};
 use piston::window::WindowSettings;
@@ -52,35 +51,10 @@ impl App {
             rectangle(RED, square, transform, gl);
         });
     }
-
-    fn update(&mut self, args: &UpdateArgs) {
-        // hands update down to transform struct
-        self.transform.update(args.dt);
-    }
-
-    fn updateButtons(&mut self, args: &ButtonArgs) {
-        use piston::input::keyboard::*;
-        use piston::input::mouse::*;
-        match args.button {
-            Button::Keyboard(e) => self.inputs.updateKeys(args),
-            Button::Mouse(e) => self.inputs.updateMouse
-        }
-    }
 }
-
-impl Inputs {
-    fn updateKeys(&mut self, args: &ButtonArgs) {
-
-    }
-
-    fn updateMouse(&mut self, args: &ButtonArgs) {
-
-    }
-}
-
 
 fn main() {
-    // Create an Glutin window.
+    // Create a Glutin window.
     let mut window: Window = WindowSettings::new("spinning-square", [200, 200])
         .graphics_api(OpenGL::V3_2)
         .exit_on_esc(true)
@@ -90,17 +64,6 @@ fn main() {
     // Create a new game and run it.
     let mut app = App {
         gl: GlGraphics::new(OpenGL::V3_2),
-        rotation: 0.0,
-        transform: Transform {
-            x: 69,
-            y: 69,
-        },
-        inputs: Inputs { 
-            wpressed: false, 
-            apressed: false, 
-            spressed: false, 
-            dpressed: false,
-        }
     };
 
     // create event listener
