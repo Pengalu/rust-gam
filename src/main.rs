@@ -4,6 +4,7 @@ extern crate graphics;
 extern crate opengl_graphics;
 extern crate piston;
 
+
 // shorthanding the imports
 use glutin_window::GlutinWindow as Window;
 use opengl_graphics::{GlGraphics, OpenGL};
@@ -11,7 +12,7 @@ use piston::Button;
 use piston::event_loop::{EventSettings, Events};
 use piston::input::{RenderArgs, RenderEvent, UpdateArgs, UpdateEvent, ButtonArgs, ButtonEvent};
 use piston::window::WindowSettings;
-use player::player;
+use player::*;
 
 // create new public struct type "App" that contains glgraphics object and rotation
 pub struct App {
@@ -27,14 +28,16 @@ impl App {
     fn render(&mut self, args: &RenderArgs) {
         use graphics::*;
 
-        const WHITE: [f32; 4.] = [1.0, 1.0, 1.0, 1.0];
-        const GREEN: [f32; 4.] = [0.0, 1.0, 0.0, 1.0];
-        const RED: [f32; 4.] = [1.0, 0.0, 0.0, 1.0];
+        // create colors (deprecate soon since we will soon be loading texture)
+        const WHITE: [f32; 4usize] = [1.0, 1.0, 1.0, 1.0];
+        const GREEN: [f32; 4usize] = [0.0, 1.0, 0.0, 1.0];
+        const RED: [f32; 4usize] = [1.0, 0.0, 0.0, 1.0];
   
+        // create square as placeholder for the player (deprecate soon since refactor)
         let square = rectangle::square(0.0, 0.0, 50.0);
-        let rotation = self.rotation;
         let (x, y) = (self.transform.x * {args.window_size[0] / 16.0}, self.transform.y * {args.window_size[1] / 16.0});
 
+        // draw stuff 
         self.gl.draw(args.viewport(), |c, gl| {
             // Clear the screen.
             clear(WHITE, gl);
