@@ -36,7 +36,8 @@ impl App {
         // create square as placeholder for the player (deprecate soon since refactor)
         let square = rectangle::square(0.0, 0.0, 50.0);
         let (x, y) = (self.transform.x * {args.window_size[0] / 16.0}, self.transform.y * {args.window_size[1] / 16.0});
-
+        let image = Image::new().rect(square(0.0,0.0,200.0));
+        
         // draw stuff 
         self.gl.draw(args.viewport(), |c, gl| {
             // Clear the screen.
