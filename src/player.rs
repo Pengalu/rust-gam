@@ -1,7 +1,7 @@
 use crate::entity::Transform;
 
 pub struct Player {
-    transform: Transform,
+    pub transform: Transform,
 }
 
 

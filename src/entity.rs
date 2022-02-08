@@ -1,5 +1,5 @@
 
 pub struct Transform {
-    x: u64,
-    y: u64,
+    pub x: u64,
+    pub y: u64,
 }
