@@ -20,39 +20,34 @@ pub struct Game {
 
 // implements functionality for struct "Game"
 impl Game {
-
     // constructor 
     pub fn new() -> Game {
         Game {
             gl: GlGraphics::new(OpenGL::V3_2),
-            player: Player::new(20u64,20u64),
+            player: Player::new(20f64,20f64),
             _inputs: InputHandler::new(),
         }
     }
-
     // function rendering for rendering to screen :stuck_out_tongue:
     pub fn render(&mut self, args: &RenderArgs) {
+        // shorthand graphics library
         use graphics::*;
+        
+        // x and y from player
+        let (x, y) = (self.player.transform.0, self.player.transform.1);
 
-        // create colors (deprecate soon since we will soon be loading texture)
-        const WHITE: [f32; 4usize] = [1.0, 1.0, 1.0, 1.0];
-  
-        let (x, y) = (200., 200.); //remember that as f64 will convert the type lol.
-        let image = Image::new().rect(square(0.0,0.0,200.0)); //make a thing to plaster le texture on
-        let texture = Texture::from_path(Path::new("./resources/PlayerSprites/PlayerPlaceHolder.png"),&TextureSettings::new()).unwrap();//remember to use & sign. I don't know why it just told me. Anyways this is the texture we're slapping on image
+        let image = Image::new().rect(square(0.0,0.0,200.0)); 
+        let texture = Texture::from_path(Path::new("./resources/PlayerSprites/PlayerPlaceHolder.png"),&TextureSettings::new()).unwrap();
         
         // draw stuff 
         self.gl.draw(args.viewport(), |c, gl| {
             // Clear the screen.
-            clear(WHITE, gl);
-
+            clear([1., 1., 1., 1.] as [f32; 4], gl);
+            // create a transform variable from previous context, then transform it with custom coords
             let transform = c
                 .transform
                 .trans(x, y);
-                
-            // Draw a box rotating around the middle of the screen.
-           // rectangle(RED, square, transform, gl);
-           image.draw(&texture, &draw_state::DrawState { scissor: None, stencil:None , blend: None } , transform, gl); //THIS FUCKING DRAWSTATE SHIT TOOK ME AN HOUR. IT TURNS OUT THAT THE EXAMPLE CODE WAS DEPRECATED (it was not said it was deprecated) and that default_draw_state() DOESNT EXIST>??????? SO I AHD TO MAKE MY OWN. FUCK
+           image.draw(&texture, &draw_state::DrawState { scissor: None, stencil:None , blend: None } , transform, gl); 
         });
     }
 

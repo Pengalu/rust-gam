@@ -21,6 +21,9 @@ fn main() {
     // Create a new game and run it.
     let mut game = Game::new();
 
+    let mut frames = 0;
+    let mut passed = 0.0;
+
     // create event listener
     let mut events = Events::new(EventSettings::new());
     
@@ -34,6 +37,17 @@ fn main() {
         // getys arguements from update and updates
         if let Some(args) = e.update_args() {
             game.update(&args);
+            passed += args.dt;
+
+            if passed > 1.0 {
+
+                let fps = (frames as f64) / passed;
+
+                println!("FPS: {}",fps);
+
+                frames = 0;
+                passed = 0.0;
+            }
         }
 
         // gets aguements from update and updates buttons pressed
