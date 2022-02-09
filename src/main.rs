@@ -6,7 +6,7 @@ extern crate piston;
 mod player;
 mod entity;
 mod game;
-mod inputHandler;
+mod input_handler;
 
 // shorthanding
 pub use game::*;
@@ -19,7 +19,7 @@ fn main() {
     let mut window = game::new_window();
 
     // Create a new game and run it.
-    let mut Game = Game::new();
+    let mut game = Game::new();
 
     // create event listener
     let mut events = Events::new(EventSettings::new());
@@ -28,17 +28,17 @@ fn main() {
     while let Some(e) = events.next(&mut window) {
         // gets arguemnts from event and renders
         if let Some(args) = e.render_args() {
-            Game.render(&args);
+            game.render(&args);
         }
 
         // getys arguements from update and updates
         if let Some(args) = e.update_args() {
-            Game.update(&args);
+            game.update(&args);
         }
 
         // gets aguements from update and updates buttons pressed
         if let Some(args) = e.button_args() {
-            Game.update_keys(&args);
+            game.update_keys(&args);
         }
     }
 }
