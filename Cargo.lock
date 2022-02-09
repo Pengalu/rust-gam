@@ -1389,6 +1389,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rust-gam"
+version = "0.1.0"
+dependencies = [
+ "find_folder",
+ "piston",
+ "piston2d-graphics",
+ "piston2d-opengl_graphics",
+ "piston_window",
+ "pistoncore-glutin_window",
+]
+
+[[package]]
 name = "rusttype"
 version = "0.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1500,18 +1512,6 @@ checksum = "2a98101bdc3833e192713c2af0b0dd2614f50d1cf1f7a97c5221b7aac052acc7"
 dependencies = [
  "once_cell",
  "winapi 0.3.9",
-]
-
-[[package]]
-name = "spinning-square"
-version = "0.1.0"
-dependencies = [
- "find_folder",
- "piston",
- "piston2d-graphics",
- "piston2d-opengl_graphics",
- "piston_window",
- "pistoncore-glutin_window",
 ]
 
 [[package]]
