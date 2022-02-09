@@ -4,7 +4,7 @@ name = "rust-gam"
 version = "0.1.0"
 authors = [
     "hueblu <hue#2552>",
-    "Pengalu" <suop#6295>
+    "Pengalu <suop#6295>"
 ]
 
 [[bin]]
