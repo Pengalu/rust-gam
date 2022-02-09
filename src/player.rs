@@ -1,4 +1,4 @@
-use piston::UpdateArgs;
+use piston::{UpdateArgs, ButtonArgs};
 
 pub struct Player {
     pub transform: (f64, f64),
@@ -20,5 +20,8 @@ impl Player {
         self.transform.1 += 800. * args.dt;
 
         [6., 6.]
+    }
+    pub fn update_keys(&mut self, args: &ButtonArgs) {
+
     }
 }
